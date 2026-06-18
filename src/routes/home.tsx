@@ -95,7 +95,7 @@ function HomePage() {
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           src={celebrate.url}
           alt="Celebrating student"
-          className="pointer-events-none absolute right-[-6%] top-[20%] z-0 w-[48vw] max-w-[520px] opacity-95 invert-0 dark:invert lg:right-[2%] lg:top-[16%] lg:w-[38vw]"
+          className="pointer-events-none absolute right-[-6%] top-[20%] z-0 w-[48vw] max-w-[520px] opacity-95 invert-0 dark:brightness-0 dark:invert lg:right-[2%] lg:top-[16%] lg:w-[38vw]"
         />
 
 
