@@ -4,15 +4,16 @@ const STORAGE_KEY = "practiq-theme";
 
 type Theme = "light" | "dark";
 
-function getInitialTheme(): Theme {
-  if (typeof window === "undefined") return "light";
-  const stored = window.localStorage.getItem(STORAGE_KEY) as Theme | null;
-  if (stored) return stored;
-  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-}
-
 export function useDarkMode() {
-  const [theme, setTheme] = useState<Theme>(getInitialTheme);
+  const [theme, setTheme] = useState<Theme>("light");
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    const stored = window.localStorage.getItem(STORAGE_KEY) as Theme | null;
+    const initial = stored ?? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    setTheme(initial);
+  }, []);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -21,8 +22,10 @@ export function useDarkMode() {
     } else {
       root.classList.remove("dark");
     }
-    window.localStorage.setItem(STORAGE_KEY, theme);
-  }, [theme]);
+    if (mounted) {
+      window.localStorage.setItem(STORAGE_KEY, theme);
+    }
+  }, [theme, mounted]);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-color-scheme: dark)");
@@ -38,5 +41,5 @@ export function useDarkMode() {
 
   const toggle = () => setTheme((t) => (t === "light" ? "dark" : "light"));
 
-  return { theme, isDark: theme === "dark", toggle };
+  return { theme, isDark: mounted ? theme === "dark" : false, toggle };
 }
