@@ -317,7 +317,7 @@ function HomePage() {
             </Link>
           </Parallax>
           <Parallax speed={0.4}>
-            <img src={thinking.url} alt="" className="mx-auto w-[90%] max-w-md dark:invert dark:hue-rotate-180 dark:brightness-125 dark:saturate-150" />
+            <img src={thinking.url} alt="" className="mx-auto w-[90%] max-w-md" />
           </Parallax>
         </div>
       </section>
