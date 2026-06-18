@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { usePractiq } from "@/lib/practiq-store";
 import { Send } from "lucide-react";
+import { motion } from "framer-motion";
+import { PageTransition } from "@/components/PageTransition";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -41,6 +43,7 @@ function Onboarding() {
   };
 
   return (
+    <PageTransition>
     <main className="mx-auto min-h-screen w-full max-w-md px-6 pt-12 pb-32">
       <p className="font-serif-italic italic text-lg text-foreground/70" style={{ fontFamily: "var(--font-serif-italic)" }}>
         Step 01
@@ -50,10 +53,15 @@ function Onboarding() {
       </h1>
 
       <div className="mt-8 flex flex-wrap gap-2.5">
-        {STACK.map((s) => {
+        {STACK.map((s, i) => {
           const active = picked.includes(s);
           return (
-            <button
+            <motion.button
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: i * 0.03, type: "spring", stiffness: 300, damping: 20 }}
+              whileTap={{ scale: 0.92 }}
+              whileHover={{ y: -2 }}
               key={s}
               type="button"
               onClick={() => toggle(s)}
@@ -63,7 +71,7 @@ function Onboarding() {
               style={{ fontFamily: "var(--font-mono)" }}
             >
               {s}
-            </button>
+            </motion.button>
           );
         })}
       </div>
@@ -79,15 +87,21 @@ function Onboarding() {
       </div>
 
       <div className="mt-10 flex justify-end">
-        <button
+        <motion.button
+          whileHover={{ scale: 1.08, rotate: -8 }}
+          whileTap={{ scale: 0.92 }}
+          animate={picked.length ? { y: [0, -6, 0] } : {}}
+          transition={{ y: { duration: 1.4, repeat: Infinity, ease: "easeInOut" } }}
           type="button"
           onClick={submit}
           aria-label="Continue"
-          className="flex h-16 w-16 items-center justify-center rounded-full border-thick bg-lime transition-transform hover:scale-105 active:scale-95"
+          disabled={!picked.length && !other.trim()}
+          className="flex h-16 w-16 items-center justify-center rounded-full border-thick bg-lime disabled:opacity-40"
         >
           <Send className="h-6 w-6 -rotate-12" strokeWidth={2.5} />
-        </button>
+        </motion.button>
       </div>
     </main>
+    </PageTransition>
   );
 }
