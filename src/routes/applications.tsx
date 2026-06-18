@@ -1,6 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BottomNav } from "@/components/BottomNav";
 import { usePractiq, STAGES } from "@/lib/practiq-store";
+import { motion, AnimatePresence } from "framer-motion";
+import { PageTransition, StaggerList, StaggerItem } from "@/components/PageTransition";
+import { X, ChevronRight, Trash2 } from "lucide-react";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/applications")({
   head: () => ({
@@ -13,11 +17,12 @@ export const Route = createFileRoute("/applications")({
 });
 
 function ApplicationsPage() {
-  const { state, advanceStage } = usePractiq();
+  const { state, advanceStage, rejectApp, removeApp } = usePractiq();
   const active = state.applications.filter((a) => a.status === "active");
   const rejected = state.applications.filter((a) => a.status === "rejected");
 
   return (
+    <PageTransition>
     <main className="mx-auto min-h-screen w-full max-w-md px-6 pt-10 pb-32">
       <p className="italic text-foreground/70" style={{ fontFamily: "var(--font-serif-italic)" }}>
         Your quests
@@ -27,9 +32,12 @@ function ApplicationsPage() {
       </h1>
 
       <h2 className="mt-6 mb-3 text-sm font-bold uppercase tracking-wide">Active</h2>
+      <StaggerList>
       <div className="space-y-4">
+        <AnimatePresence mode="popLayout">
         {active.map((a) => (
-          <article key={a.id} className="rounded-2xl border-thick p-5">
+          <StaggerItem key={a.id}>
+          <motion.article layout exit={{ opacity: 0, x: -40 }} className="rounded-2xl border-thick p-5">
             <div className="flex items-start justify-between">
               <div>
                 <h3 className="font-display text-xl uppercase" style={{ fontFamily: "var(--font-display)" }}>
@@ -46,17 +54,58 @@ function ApplicationsPage() {
               status="active"
               onTap={() => advanceStage(a.id)}
             />
-          </article>
+            <div className="mt-4 flex gap-2">
+              <motion.button
+                whileTap={{ scale: 0.96 }}
+                onClick={() => {
+                  advanceStage(a.id);
+                  if (a.stageIndex >= 2) toast.success(`${a.company}: Decision reached!`);
+                }}
+                className="flex flex-1 items-center justify-center gap-1 rounded-full border-thick bg-lime px-3 py-2 text-xs font-bold uppercase"
+              >
+                Advance <ChevronRight className="h-3 w-3" />
+              </motion.button>
+              <motion.button
+                whileTap={{ scale: 0.96 }}
+                onClick={() => {
+                  rejectApp(a.id);
+                  toast(`${a.company} marked rejected. +30 XP`);
+                }}
+                aria-label="Reject"
+                className="flex items-center justify-center rounded-full border-thick px-3 py-2 text-xs font-bold uppercase"
+                style={{ background: "var(--salmon)" }}
+              >
+                <X className="h-3.5 w-3.5" strokeWidth={3} />
+              </motion.button>
+            </div>
+          </motion.article>
+          </StaggerItem>
         ))}
+        </AnimatePresence>
+        {active.length === 0 && (
+          <p className="rounded-2xl border-thick border-dashed p-8 text-center text-sm text-foreground/60">
+            No active applications yet. Head to Matches to apply.
+          </p>
+        )}
       </div>
+      </StaggerList>
 
       {rejected.length > 0 && (
         <>
           <h2 className="mt-8 mb-3 text-sm font-bold uppercase tracking-wide" style={{ color: "var(--salmon)" }}>
             Rejected
           </h2>
+          <div className="space-y-4">
+          <AnimatePresence>
           {rejected.map((a) => (
-            <article key={a.id} className="rounded-2xl border-thick p-5">
+            <motion.article
+              layout
+              key={a.id}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, x: 40 }}
+              className="rounded-2xl border-thick p-5"
+            >
               <div className="flex items-start justify-between">
                 <div>
                   <h3 className="font-display text-xl uppercase" style={{ fontFamily: "var(--font-display)" }}>
@@ -75,13 +124,22 @@ function ApplicationsPage() {
               <p className="mt-4 italic text-sm text-foreground/70" style={{ fontFamily: "var(--font-serif-italic)" }}>
                 Even though it did not work this time, you still got +30 XP. Keep Applying!!
               </p>
-            </article>
+              <button
+                onClick={() => removeApp(a.id)}
+                className="mt-3 inline-flex items-center gap-1 text-xs font-bold uppercase text-foreground/60 hover:text-foreground"
+              >
+                <Trash2 className="h-3 w-3" /> Remove
+              </button>
+            </motion.article>
           ))}
+          </AnimatePresence>
+          </div>
         </>
       )}
 
       <BottomNav />
     </main>
+    </PageTransition>
   );
 }
 
