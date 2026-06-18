@@ -192,7 +192,7 @@ function HomePage() {
         <div className="grid items-center gap-12 lg:grid-cols-[1fr_1fr]">
           <div className="relative">
             <Parallax speed={0.5}>
-              <img src={handshake.url} alt="" className="mx-auto w-[90%] max-w-xl lg:w-full dark:invert dark:hue-rotate-180 dark:brightness-125 dark:saturate-150" />
+              <img src={handshake.url} alt="" className="mx-auto w-[90%] max-w-xl lg:w-full" />
             </Parallax>
             <Parallax speed={-0.3} className="absolute -bottom-6 left-4 hidden lg:block">
               <span
