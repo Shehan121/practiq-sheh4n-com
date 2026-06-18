@@ -1,7 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { BottomNav } from "@/components/BottomNav";
-import { JOBS, type JobMatch } from "@/lib/practiq-store";
+import { JOBS, usePractiq, type JobMatch } from "@/lib/practiq-store";
+import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
+import { PageTransition, StaggerList, StaggerItem } from "@/components/PageTransition";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/matches")({
   head: () => ({
@@ -19,6 +22,7 @@ const FILTERS: Filter[] = ["All", "Visa ok", "B1 Friendly"];
 function MatchesPage() {
   const [filter, setFilter] = useState<Filter>("All");
   const [open, setOpen] = useState<JobMatch | null>(null);
+  const { state, applyToJob } = usePractiq();
 
   const list = JOBS.filter((j) => {
     if (filter === "Visa ok") return j.visaOk;
@@ -27,6 +31,7 @@ function MatchesPage() {
   });
 
   return (
+    <PageTransition>
     <main className="mx-auto min-h-screen w-full max-w-md px-6 pt-10 pb-32">
       <p className="italic text-foreground/70" style={{ fontFamily: "var(--font-serif-italic)" }}>
         Today's quest
@@ -35,24 +40,40 @@ function MatchesPage() {
         Matches found — {list.length}
       </h1>
 
+      <LayoutGroup>
       <div className="mt-5 flex gap-2">
         {FILTERS.map((f) => (
-          <button
+          <motion.button
+            whileTap={{ scale: 0.95 }}
             key={f}
             onClick={() => setFilter(f)}
-            className={`rounded-full border-thick px-4 py-1.5 text-xs font-bold uppercase ${
-              filter === f ? "bg-lime" : "bg-background"
-            }`}
+            className="relative rounded-full border-thick px-4 py-1.5 text-xs font-bold uppercase"
           >
-            {f}
-          </button>
+            {filter === f && (
+              <motion.span
+                layoutId="filter-pill"
+                transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                className="absolute inset-0 -z-10 rounded-full bg-lime"
+              />
+            )}
+            <span className="relative">{f}</span>
+          </motion.button>
         ))}
       </div>
+      </LayoutGroup>
 
+      <StaggerList delay={0.05}>
       <div className="mt-6 space-y-4">
-        {list.map((j) => (
-          <button
-            key={j.id}
+        <AnimatePresence mode="popLayout">
+        {list.map((j) => {
+          const applied = state.applications.some((a) => a.id === j.id);
+          return (
+          <StaggerItem key={j.id}>
+          <motion.button
+            layout
+            whileHover={{ y: -3 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ type: "spring", stiffness: 400, damping: 25 }}
             onClick={() => setOpen(j)}
             className="block w-full rounded-2xl border-thick bg-background p-5 text-left"
           >
@@ -64,7 +85,11 @@ function MatchesPage() {
                 <p className="text-sm">{j.role}</p>
               </div>
               <div className="text-right">
-                {j.badge && (
+                {applied ? (
+                  <span className="inline-block rounded-full border-thick bg-foreground px-2.5 py-0.5 text-[10px] font-bold uppercase text-background">
+                    Applied
+                  </span>
+                ) : j.badge && (
                   <span className="inline-block rounded-full border-thick bg-lime px-2.5 py-0.5 text-[10px] font-bold uppercase">
                     {j.badge}
                   </span>
@@ -88,16 +113,27 @@ function MatchesPage() {
                 </span>
               ))}
             </div>
-          </button>
-        ))}
+          </motion.button>
+          </StaggerItem>
+        );})}
+        </AnimatePresence>
       </div>
+      </StaggerList>
 
+      <AnimatePresence>
       {open && (
-        <div
-          className="fixed inset-0 z-50 flex items-end justify-center bg-foreground/40 p-4"
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 flex items-end justify-center bg-foreground/40 p-4 sm:items-center"
           onClick={() => setOpen(null)}
         >
-          <div
+          <motion.div
+            initial={{ y: 60, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 60, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 300, damping: 28 }}
             onClick={(e) => e.stopPropagation()}
             className="w-full max-w-md rounded-3xl border-thick bg-background p-6"
           >
@@ -113,22 +149,40 @@ function MatchesPage() {
               <Row k="Match" v={`${open.match}%`} />
             </dl>
             <div className="mt-6 flex gap-3">
-              <button
+              <motion.button
+                whileTap={{ scale: 0.96 }}
                 onClick={() => setOpen(null)}
                 className="flex-1 rounded-full border-thick px-4 py-2.5 text-sm font-bold uppercase"
               >
                 Close
-              </button>
-              <button className="flex-1 rounded-full border-thick bg-lime px-4 py-2.5 text-sm font-bold uppercase">
-                Apply Now
-              </button>
+              </motion.button>
+              {state.applications.some((a) => a.id === open.id) ? (
+                <button disabled className="flex-1 rounded-full border-thick bg-foreground px-4 py-2.5 text-sm font-bold uppercase text-background opacity-80">
+                  Applied ✓
+                </button>
+              ) : (
+                <motion.button
+                  whileTap={{ scale: 0.96 }}
+                  whileHover={{ scale: 1.02 }}
+                  onClick={() => {
+                    applyToJob(open);
+                    toast.success(`Applied to ${open.company} — +50 XP`);
+                    setOpen(null);
+                  }}
+                  className="flex-1 rounded-full border-thick bg-lime px-4 py-2.5 text-sm font-bold uppercase"
+                >
+                  Apply Now
+                </motion.button>
+              )}
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       )}
+      </AnimatePresence>
 
       <BottomNav />
     </main>
+    </PageTransition>
   );
 }
 
