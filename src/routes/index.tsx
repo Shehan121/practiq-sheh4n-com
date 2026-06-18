@@ -5,6 +5,7 @@ import { usePractiq } from "@/lib/practiq-store";
 import { Send } from "lucide-react";
 import { motion } from "framer-motion";
 import { PageTransition } from "@/components/PageTransition";
+import cat from "@/assets/cat.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -44,11 +45,12 @@ function Onboarding() {
 
   return (
     <PageTransition>
-    <main className="mx-auto min-h-screen w-full max-w-md px-6 pt-12 pb-32">
+    <main className="mx-auto min-h-screen w-full max-w-md px-6 pt-12 pb-32 lg:grid lg:max-w-6xl lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-16 lg:px-12 lg:pt-16">
+      <div>
       <p className="font-serif-italic italic text-lg text-foreground/70" style={{ fontFamily: "var(--font-serif-italic)" }}>
         Step 01
       </p>
-      <h1 className="mt-2 font-display text-4xl uppercase leading-none tracking-tight" style={{ fontFamily: "var(--font-display)" }}>
+      <h1 className="mt-2 font-display text-4xl uppercase leading-none tracking-tight lg:text-6xl" style={{ fontFamily: "var(--font-display)" }}>
         Choose your<br />Stack
       </h1>
 
@@ -101,6 +103,15 @@ function Onboarding() {
           <Send className="h-6 w-6 -rotate-12" strokeWidth={2.5} />
         </motion.button>
       </div>
+      </div>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9, rotate: 4 }}
+        animate={{ opacity: 1, scale: 1, rotate: 0 }}
+        transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+        className="hidden lg:flex lg:items-center lg:justify-center"
+      >
+        <img src={cat.url} alt="" className="w-full max-w-md" />
+      </motion.div>
     </main>
     </PageTransition>
   );
