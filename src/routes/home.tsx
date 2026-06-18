@@ -320,11 +320,8 @@ function HomePage() {
         </div>
       </section>
 
-      {/* CTA with parallax cat */}
+      {/* CTA */}
       <section className="relative mx-auto max-w-7xl overflow-hidden px-6 py-28 lg:px-10 lg:py-40">
-        <Parallax speed={0.7} className="pointer-events-none absolute right-0 top-0">
-          <img src={celebrate.url} alt="" className="w-56 opacity-90 lg:w-80" />
-        </Parallax>
         <Parallax speed={-0.4} className="pointer-events-none absolute -bottom-10 left-2">
           <p className="font-display uppercase opacity-[0.06]" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(8rem, 22vw, 22rem)", lineHeight: 0.85, letterSpacing: "-0.05em" }}>
             Go
