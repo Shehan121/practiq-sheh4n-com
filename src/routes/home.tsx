@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { JOBS } from "@/lib/practiq-store";
 import { Parallax } from "@/components/Parallax";
 import celebrate from "@/assets/celebrate.png.asset.json";
+import cat from "@/assets/cat.png.asset.json";
 import handshake from "@/assets/handshake.png.asset.json";
 import thinking from "@/assets/thinking.png.asset.json";
 
@@ -95,6 +96,16 @@ function HomePage() {
           src={celebrate.url}
           alt="Celebrating student"
           className="pointer-events-none absolute right-[-6%] top-[20%] z-0 w-[48vw] max-w-[520px] opacity-95 lg:right-[2%] lg:top-[16%] lg:w-[38vw]"
+        />
+
+        {/* Cat sticker — right side of hero */}
+        <motion.img
+          initial={{ opacity: 0, x: 60, rotate: 8 }}
+          animate={{ opacity: 1, x: 0, rotate: 0 }}
+          transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          src={cat.url}
+          alt="Cat"
+          className="pointer-events-none absolute right-[2%] top-[8%] z-0 hidden h-auto w-[14vw] max-w-[200px] opacity-90 lg:block"
         />
 
         <motion.div style={{ y: heroTextY, opacity: heroOpacity }} className="relative z-10">
