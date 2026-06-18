@@ -98,15 +98,6 @@ function HomePage() {
           className="pointer-events-none absolute right-[-6%] top-[20%] z-0 w-[48vw] max-w-[520px] opacity-95 lg:right-[2%] lg:top-[16%] lg:w-[38vw]"
         />
 
-        {/* Cat sticker — right side of hero */}
-        <motion.img
-          initial={{ opacity: 0, x: 60, rotate: 8 }}
-          animate={{ opacity: 1, x: 0, rotate: 0 }}
-          transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-          src={cat.url}
-          alt="Cat"
-          className="pointer-events-none absolute right-[2%] top-[8%] z-0 hidden h-auto w-[14vw] max-w-[200px] opacity-90 lg:block"
-        />
 
         <motion.div style={{ y: heroTextY, opacity: heroOpacity }} className="relative z-10">
           <p className="italic text-foreground/60" style={{ fontFamily: "var(--font-serif-italic)" }}>
@@ -338,6 +329,18 @@ function HomePage() {
             Go
           </p>
         </Parallax>
+
+        {/* Cat sticker — left side of CTA */}
+        <motion.img
+          initial={{ opacity: 0, x: -60, rotate: -8 }}
+          whileInView={{ opacity: 1, x: 0, rotate: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          src={cat.url}
+          alt="Cat"
+          className="pointer-events-none absolute left-[-2%] top-[10%] z-0 hidden h-auto w-[16vw] max-w-[220px] opacity-90 lg:block"
+        />
+
         <div className="relative max-w-3xl">
           <p className="italic text-foreground/60" style={{ fontFamily: "var(--font-serif-italic)" }}>Today's quest</p>
           <h2 className="mt-2 font-display uppercase leading-[0.85]" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(3.5rem, 12vw, 10rem)", letterSpacing: "-0.04em" }}>
