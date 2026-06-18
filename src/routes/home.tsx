@@ -329,6 +329,18 @@ function HomePage() {
             Go
           </p>
         </Parallax>
+
+        {/* Cat sticker — left side of CTA */}
+        <motion.img
+          initial={{ opacity: 0, x: -60, rotate: -8 }}
+          whileInView={{ opacity: 1, x: 0, rotate: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          src={cat.url}
+          alt="Cat"
+          className="pointer-events-none absolute left-[-2%] top-[10%] z-0 hidden h-auto w-[16vw] max-w-[220px] opacity-90 lg:block"
+        />
+
         <div className="relative max-w-3xl">
           <p className="italic text-foreground/60" style={{ fontFamily: "var(--font-serif-italic)" }}>Today's quest</p>
           <h2 className="mt-2 font-display uppercase leading-[0.85]" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(3.5rem, 12vw, 10rem)", letterSpacing: "-0.04em" }}>
