@@ -63,7 +63,7 @@ function ApplicationsPage() {
                   advanceStage(a.id);
                   if (a.stageIndex >= 2) toast.success(`${a.company}: Decision reached!`);
                 }}
-                className="flex flex-1 items-center justify-center gap-1 rounded-full border-thick bg-lime px-3 py-2 text-xs font-bold uppercase"
+                className="flex flex-1 items-center justify-center gap-1 rounded-full border-thick bg-lime px-3 py-2 text-xs font-bold uppercase text-black"
               >
                 Advance <ChevronRight className="h-3 w-3" />
               </motion.button>
