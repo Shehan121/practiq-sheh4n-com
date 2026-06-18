@@ -100,7 +100,7 @@ function HomePage() {
 
 
         <motion.div style={{ y: heroTextY, opacity: heroOpacity }} className="relative z-10">
-          <p className="italic text-foreground/60" style={{ fontFamily: "var(--font-serif-italic)" }}>
+          <p className="italic text-foreground/60" style={{ fontFamily: "var(--font-serif-italic)", fontSize: "clamp(1.25rem, 3vw, 2.5rem)" }}>
             Welcome back, {state.name} —
           </p>
           <div className="mt-2 space-y-1">
@@ -332,13 +332,13 @@ function HomePage() {
 
         {/* Cat sticker — right side of CTA */}
         <motion.img
-          initial={{ opacity: 0, x: 60, rotate: 8 }}
+          initial={{ opacity: 0, x: 80, rotate: 8 }}
           whileInView={{ opacity: 1, x: 0, rotate: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           src={cat.url}
           alt="Cat"
-          className="pointer-events-none absolute right-[-2%] top-[10%] z-0 hidden h-auto w-[16vw] max-w-[220px] opacity-90 lg:block"
+          className="pointer-events-none absolute right-[-5%] top-[8%] z-0 hidden h-[75vh] w-auto max-w-none opacity-90 lg:block"
         />
 
         <div className="relative max-w-3xl">
