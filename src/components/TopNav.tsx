@@ -1,7 +1,8 @@
 import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
+import { useDarkMode } from "@/hooks/useDarkMode";
 
 type Item = { label: string; anchor?: string; route?: string };
 
@@ -18,6 +19,7 @@ export function TopNav() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const { isDark, toggle } = useDarkMode();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -74,16 +76,49 @@ export function TopNav() {
             </span>
           </Link>
 
-          <motion.button
-            whileTap={{ scale: 0.9 }}
-            whileHover={{ scale: 1.05 }}
-            onClick={() => setOpen((v) => !v)}
-            aria-label="Open menu"
-            className="flex items-center gap-2 rounded-full border-thick bg-lime px-4 py-2 text-xs font-bold uppercase tracking-wide lg:px-5 lg:py-2.5 lg:text-sm"
-          >
-            <span className="hidden sm:inline">Menu</span>
-            <Menu className="h-4 w-4" strokeWidth={2.5} />
-          </motion.button>
+          <div className="flex items-center gap-2">
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              whileHover={{ scale: 1.05 }}
+              onClick={toggle}
+              aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+              className="flex h-10 w-10 items-center justify-center rounded-full border-thick bg-background"
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                {isDark ? (
+                  <motion.div
+                    key="moon"
+                    initial={{ rotate: -90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: 90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Moon className="h-4 w-4" strokeWidth={2.5} />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="sun"
+                    initial={{ rotate: 90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: -90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Sun className="h-4 w-4" strokeWidth={2.5} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.button>
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              whileHover={{ scale: 1.05 }}
+              onClick={() => setOpen((v) => !v)}
+              aria-label="Open menu"
+              className="flex items-center gap-2 rounded-full border-thick bg-lime px-4 py-2 text-xs font-bold uppercase tracking-wide lg:px-5 lg:py-2.5 lg:text-sm"
+            >
+              <span className="hidden sm:inline">Menu</span>
+              <Menu className="h-4 w-4" strokeWidth={2.5} />
+            </motion.button>
+          </div>
         </div>
       </motion.header>
 
