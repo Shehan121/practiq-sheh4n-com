@@ -25,7 +25,7 @@ function ApplicationsPage() {
 
   return (
     <PageTransition>
-    <main className="mx-auto min-h-screen w-full max-w-md px-6 pt-10 pb-32 lg:max-w-6xl lg:pl-28 lg:pr-12 lg:pt-14 lg:pb-16">
+    <main className="mx-auto min-h-screen w-full max-w-7xl px-6 pt-28 pb-20 lg:px-10 lg:pt-32">
       <p className="italic text-foreground/70" style={{ fontFamily: "var(--font-serif-italic)" }}>
         Your quests
       </p>
