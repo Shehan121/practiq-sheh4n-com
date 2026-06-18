@@ -1,6 +1,8 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { BottomNav } from "@/components/BottomNav";
 import { usePractiq } from "@/lib/practiq-store";
+import { motion } from "framer-motion";
+import { PageTransition } from "@/components/PageTransition";
 
 export const Route = createFileRoute("/profile")({
   head: () => ({
@@ -23,15 +25,22 @@ function ProfilePage() {
   };
 
   return (
+    <PageTransition>
     <main className="mx-auto min-h-screen w-full max-w-md px-6 pt-10 pb-32">
       <h1 className="font-display text-3xl uppercase" style={{ fontFamily: "var(--font-display)" }}>
         Your Profile
       </h1>
 
       <div className="mt-6 flex flex-col items-center text-center">
-        <div className="flex h-24 w-24 items-center justify-center rounded-full border-thick bg-lime font-display text-4xl uppercase" style={{ fontFamily: "var(--font-display)" }}>
+        <motion.div
+          initial={{ scale: 0, rotate: -180 }}
+          animate={{ scale: 1, rotate: 0 }}
+          transition={{ type: "spring", stiffness: 200, damping: 15 }}
+          className="flex h-24 w-24 items-center justify-center rounded-full border-thick bg-lime font-display text-4xl uppercase"
+          style={{ fontFamily: "var(--font-display)" }}
+        >
           A
-        </div>
+        </motion.div>
         <p className="mt-3 text-2xl font-bold italic" style={{ fontFamily: "var(--font-serif-italic)" }}>
           Amir Hossein
         </p>
@@ -55,7 +64,12 @@ function ProfilePage() {
           <span>98%</span>
         </div>
         <div className="mt-2 h-3 w-full overflow-hidden rounded-full border-thick">
-          <div className="h-full bg-lime" style={{ width: "98%" }} />
+          <motion.div
+            initial={{ width: 0 }}
+            animate={{ width: "98%" }}
+            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
+            className="h-full bg-lime"
+          />
         </div>
       </div>
 
@@ -101,16 +115,19 @@ function ProfilePage() {
         </dl>
       </section>
 
-      <button
+      <motion.button
+        whileTap={{ scale: 0.97 }}
+        whileHover={{ scale: 1.01 }}
         onClick={logout}
         className="mt-6 w-full rounded-full border-thick py-3 text-sm font-bold uppercase tracking-wide"
         style={{ background: "var(--salmon)" }}
       >
         Logout
-      </button>
+      </motion.button>
 
       <BottomNav />
     </main>
+    </PageTransition>
   );
 }
 

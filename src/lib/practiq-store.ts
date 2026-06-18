@@ -106,6 +106,36 @@ export function usePractiq() {
             : a,
         ),
       })),
+    applyToJob: (job: JobMatch) =>
+      setState((s) => {
+        if (s.applications.some((a) => a.id === job.id)) return s;
+        return {
+          ...s,
+          applications: [
+            ...s.applications,
+            {
+              id: job.id,
+              company: job.company,
+              role: job.role,
+              daysLeft: 14,
+              stageIndex: 0,
+              status: "active",
+            },
+          ],
+        };
+      }),
+    rejectApp: (id: string) =>
+      setState((s) => ({
+        ...s,
+        applications: s.applications.map((a) =>
+          a.id === id ? { ...a, status: "rejected", stageIndex: 3 } : a,
+        ),
+      })),
+    removeApp: (id: string) =>
+      setState((s) => ({
+        ...s,
+        applications: s.applications.filter((a) => a.id !== id),
+      })),
     reset: () => setState(() => ({ ...DEFAULT_STATE, onboarded: false })),
   };
 }
