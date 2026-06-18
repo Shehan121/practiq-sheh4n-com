@@ -124,7 +124,7 @@ function HomePage() {
             The internship platform built for international students in Germany. Match by stack, visa status & language — track every quest from application to offer.
           </p>
           <div className="mt-5 flex flex-wrap gap-3">
-            <Link to="/matches" className="inline-flex items-center gap-2 rounded-full border-thick bg-lime px-6 py-3 text-sm font-bold uppercase transition-transform hover:scale-105 active:scale-95">
+            <Link to="/matches" className="inline-flex items-center gap-2 rounded-full border-thick bg-lime px-6 py-3 text-sm font-bold uppercase text-black transition-transform hover:scale-105 active:scale-95">
               Browse matches <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
             </Link>
             <Link to="/applications" className="inline-flex items-center rounded-full border-thick bg-background px-6 py-3 text-sm font-bold uppercase transition-transform hover:scale-105 active:scale-95">
@@ -192,7 +192,7 @@ function HomePage() {
         <div className="grid items-center gap-12 lg:grid-cols-[1fr_1fr]">
           <div className="relative">
             <Parallax speed={0.5}>
-              <img src={handshake.url} alt="" className="mx-auto w-[90%] max-w-xl invert-0 dark:invert lg:w-full" />
+              <img src={handshake.url} alt="" className="mx-auto w-[90%] max-w-xl invert-0 dark:brightness-0 dark:invert lg:w-full" />
             </Parallax>
             <Parallax speed={-0.3} className="absolute -bottom-6 left-4 hidden lg:block">
               <span
@@ -312,12 +312,12 @@ function HomePage() {
             <p className="mt-6 max-w-md text-foreground/70 lg:text-lg">
               Applied → In review → Interview → Decision. Watch your applications progress through every stage, in one place.
             </p>
-            <Link to="/applications" className="mt-6 inline-flex rounded-full border-thick bg-lime px-6 py-3 text-sm font-bold uppercase hover:scale-105 transition-transform">
+            <Link to="/applications" className="mt-6 inline-flex rounded-full border-thick bg-lime px-6 py-3 text-sm font-bold uppercase text-black hover:scale-105 transition-transform">
               Open my quests →
             </Link>
           </Parallax>
           <Parallax speed={0.4}>
-            <img src={thinking.url} alt="" className="mx-auto w-[90%] max-w-md invert-0 dark:invert" />
+            <img src={thinking.url} alt="" className="mx-auto w-[90%] max-w-md invert-0 dark:brightness-0 dark:invert" />
           </Parallax>
         </div>
       </section>
@@ -338,7 +338,7 @@ function HomePage() {
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           src={cat.url}
           alt="Cat"
-          className="pointer-events-none absolute right-[-5%] top-[8%] z-0 hidden h-[75vh] w-auto max-w-none opacity-90 invert-0 dark:invert lg:block"
+          className="pointer-events-none absolute right-[-5%] top-[8%] z-0 hidden h-[75vh] w-auto max-w-none opacity-90 invert-0 dark:brightness-0 dark:invert lg:block"
         />
 
         <div className="relative max-w-3xl">
@@ -347,7 +347,7 @@ function HomePage() {
             Ready to level up?
           </h2>
           <div className="mt-10 flex flex-wrap gap-3">
-            <Link to="/matches" className="rounded-full border-thick bg-lime px-7 py-3 text-sm font-bold uppercase transition-transform hover:scale-105">
+            <Link to="/matches" className="rounded-full border-thick bg-lime px-7 py-3 text-sm font-bold uppercase text-black transition-transform hover:scale-105">
               Start matching
             </Link>
             <Link to="/profile" className="rounded-full border-thick bg-background px-7 py-3 text-sm font-bold uppercase transition-transform hover:scale-105">
