@@ -95,7 +95,7 @@ function HomePage() {
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           src={celebrate.url}
           alt="Celebrating student"
-          className="pointer-events-none absolute right-[-6%] top-[20%] z-0 w-[48vw] max-w-[520px] opacity-95 invert-0 dark:brightness-0 dark:invert lg:right-[2%] lg:top-[16%] lg:w-[38vw]"
+          className="pointer-events-none absolute right-[-6%] top-[20%] z-0 w-[48vw] max-w-[520px] opacity-95 lg:right-[2%] lg:top-[16%] lg:w-[38vw]"
         />
 
 
@@ -147,10 +147,10 @@ function HomePage() {
       {/* SEARCH STRIP */}
       <section id="discover" className="relative mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-28">
         <div className="relative rounded-3xl border-thick bg-lime p-6 lg:p-12">
-          <p className="italic text-foreground/80" style={{ fontFamily: "var(--font-serif-italic)" }}>
+          <p className="italic text-black" style={{ fontFamily: "var(--font-serif-italic)" }}>
             Find your match
           </p>
-          <h2 className="mt-1 font-display text-3xl uppercase lg:text-5xl" style={{ fontFamily: "var(--font-display)" }}>
+          <h2 className="mt-1 font-display text-3xl uppercase text-black lg:text-5xl" style={{ fontFamily: "var(--font-display)" }}>
             Search internships
           </h2>
           <div className="mt-6 flex items-center gap-2 rounded-full border-thick bg-background px-5 py-3">
@@ -192,7 +192,7 @@ function HomePage() {
         <div className="grid items-center gap-12 lg:grid-cols-[1fr_1fr]">
           <div className="relative">
             <Parallax speed={0.5}>
-              <img src={handshake.url} alt="" className="mx-auto w-[90%] max-w-xl invert-0 dark:brightness-0 dark:invert lg:w-full" />
+              <img src={handshake.url} alt="" className="mx-auto w-[90%] max-w-xl lg:w-full" />
             </Parallax>
             <Parallax speed={-0.3} className="absolute -bottom-6 left-4 hidden lg:block">
               <span
