@@ -95,7 +95,7 @@ function HomePage() {
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           src={celebrate.url}
           alt="Celebrating student"
-          className="pointer-events-none absolute right-[-6%] top-[20%] z-0 w-[48vw] max-w-[520px] opacity-95 lg:right-[2%] lg:top-[16%] lg:w-[38vw] dark:invert dark:hue-rotate-180 dark:brightness-125 dark:saturate-150"
+          className="pointer-events-none absolute right-[-6%] top-[20%] z-0 w-[48vw] max-w-[520px] opacity-95 lg:right-[2%] lg:top-[16%] lg:w-[38vw]"
         />
 
 
@@ -192,7 +192,7 @@ function HomePage() {
         <div className="grid items-center gap-12 lg:grid-cols-[1fr_1fr]">
           <div className="relative">
             <Parallax speed={0.5}>
-              <img src={handshake.url} alt="" className="mx-auto w-[90%] max-w-xl lg:w-full dark:invert dark:hue-rotate-180 dark:brightness-125 dark:saturate-150" />
+              <img src={handshake.url} alt="" className="mx-auto w-[90%] max-w-xl lg:w-full" />
             </Parallax>
             <Parallax speed={-0.3} className="absolute -bottom-6 left-4 hidden lg:block">
               <span
@@ -317,7 +317,7 @@ function HomePage() {
             </Link>
           </Parallax>
           <Parallax speed={0.4}>
-            <img src={thinking.url} alt="" className="mx-auto w-[90%] max-w-md dark:invert dark:hue-rotate-180 dark:brightness-125 dark:saturate-150" />
+            <img src={thinking.url} alt="" className="mx-auto w-[90%] max-w-md" />
           </Parallax>
         </div>
       </section>
@@ -338,7 +338,7 @@ function HomePage() {
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           src={cat.url}
           alt="Cat"
-          className="pointer-events-none absolute right-[-5%] top-[8%] z-0 hidden h-[75vh] w-auto max-w-none opacity-90 lg:block dark:invert dark:hue-rotate-180 dark:brightness-125 dark:saturate-150"
+          className="pointer-events-none absolute right-[-5%] top-[8%] z-0 hidden h-[75vh] w-auto max-w-none opacity-90 lg:block"
         />
 
         <div className="relative max-w-3xl">
