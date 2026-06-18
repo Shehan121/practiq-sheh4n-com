@@ -317,7 +317,7 @@ function HomePage() {
             </Link>
           </Parallax>
           <Parallax speed={0.4}>
-            <img src={thinking.url} alt="" className="mx-auto w-[90%] max-w-md invert-0 dark:brightness-0 dark:invert" />
+            <img src={thinking.url} alt="" className="mx-auto w-[90%] max-w-md" />
           </Parallax>
         </div>
       </section>
@@ -338,7 +338,7 @@ function HomePage() {
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           src={cat.url}
           alt="Cat"
-          className="pointer-events-none absolute right-[-5%] top-[8%] z-0 hidden h-[75vh] w-auto max-w-none opacity-90 invert-0 dark:brightness-0 dark:invert lg:block"
+          className="pointer-events-none absolute right-[-5%] top-[8%] z-0 hidden h-[75vh] w-auto max-w-none opacity-90 lg:block"
         />
 
         <div className="relative max-w-3xl">
