@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { PageTransition, StaggerList, StaggerItem } from "@/components/PageTransition";
 import { X, ChevronRight, Trash2 } from "lucide-react";
 import { toast } from "sonner";
+import thinking from "@/assets/thinking.png.asset.json";
+import cat from "@/assets/cat.png.asset.json";
 
 export const Route = createFileRoute("/applications")({
   head: () => ({
@@ -23,17 +25,17 @@ function ApplicationsPage() {
 
   return (
     <PageTransition>
-    <main className="mx-auto min-h-screen w-full max-w-md px-6 pt-10 pb-32">
+    <main className="mx-auto min-h-screen w-full max-w-md px-6 pt-10 pb-32 lg:max-w-6xl lg:pl-28 lg:pr-12 lg:pt-14 lg:pb-16">
       <p className="italic text-foreground/70" style={{ fontFamily: "var(--font-serif-italic)" }}>
         Your quests
       </p>
-      <h1 className="font-display text-3xl uppercase" style={{ fontFamily: "var(--font-display)" }}>
+      <h1 className="font-display text-3xl uppercase lg:text-5xl" style={{ fontFamily: "var(--font-display)" }}>
         Applications: {state.applications.length}
       </h1>
 
       <h2 className="mt-6 mb-3 text-sm font-bold uppercase tracking-wide">Active</h2>
       <StaggerList>
-      <div className="space-y-4">
+      <div className="grid gap-4 lg:grid-cols-2">
         <AnimatePresence mode="popLayout">
         {active.map((a) => (
           <StaggerItem key={a.id}>
@@ -83,19 +85,32 @@ function ApplicationsPage() {
         ))}
         </AnimatePresence>
         {active.length === 0 && (
-          <p className="rounded-2xl border-thick border-dashed p-8 text-center text-sm text-foreground/60">
-            No active applications yet. Head to Matches to apply.
-          </p>
+          <div className="rounded-2xl border-thick border-dashed p-8 text-center lg:col-span-2">
+            <motion.img
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+              src={thinking.url}
+              alt="No applications yet"
+              className="mx-auto w-40"
+            />
+            <p className="mt-3 text-sm text-foreground/60">
+              No active applications yet. Head to Matches to apply.
+            </p>
+          </div>
         )}
       </div>
       </StaggerList>
 
       {rejected.length > 0 && (
         <>
-          <h2 className="mt-8 mb-3 text-sm font-bold uppercase tracking-wide" style={{ color: "var(--salmon)" }}>
-            Rejected
-          </h2>
-          <div className="space-y-4">
+          <div className="mt-8 flex items-center gap-3">
+            <h2 className="text-sm font-bold uppercase tracking-wide" style={{ color: "var(--salmon)" }}>
+              Rejected
+            </h2>
+            <img src={cat.url} alt="" className="h-10 w-auto" />
+          </div>
+          <div className="mt-3 grid gap-4 lg:grid-cols-2">
           <AnimatePresence>
           {rejected.map((a) => (
             <motion.article
