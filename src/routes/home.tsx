@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { JOBS } from "@/lib/practiq-store";
 import { Parallax } from "@/components/Parallax";
 import celebrate from "@/assets/celebrate.png.asset.json";
+import cat from "@/assets/cat.png.asset.json";
 import handshake from "@/assets/handshake.png.asset.json";
 import thinking from "@/assets/thinking.png.asset.json";
 
