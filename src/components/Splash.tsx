@@ -27,7 +27,7 @@ export function Splash() {
             className="flex items-baseline"
           >
             <span
-              className="uppercase leading-none"
+              className="uppercase leading-none text-black"
               style={{
                 fontFamily: "var(--font-display)",
                 fontSize: "clamp(3.5rem, 18vw, 7rem)",
@@ -46,7 +46,7 @@ export function Splash() {
                 fontStyle: "italic",
                 fontSize: "clamp(3.5rem, 18vw, 7rem)",
                 lineHeight: 1,
-                color: "var(--foreground)",
+                color: "black",
               }}
             >
               .
@@ -57,7 +57,7 @@ export function Splash() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.75, duration: 0.6 }}
-            className="mt-4 italic text-foreground/70"
+            className="mt-4 italic text-black/70"
             style={{ fontFamily: "var(--font-serif-italic)", fontSize: "1.25rem" }}
           >
             learn / grow / achieve
@@ -67,7 +67,7 @@ export function Splash() {
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ delay: 0.3, duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute bottom-16 h-[3px] w-40 origin-left bg-foreground"
+            className="absolute bottom-16 h-[3px] w-40 origin-left bg-black"
           />
         </motion.div>
       )}
