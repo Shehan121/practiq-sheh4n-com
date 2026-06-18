@@ -1,19 +1,24 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 
-const items = [
-  { to: "/home", label: "Home" },
-  { to: "/matches", label: "Matches" },
-  { to: "/applications", label: "Applications" },
-  { to: "/profile", label: "Profile" },
-] as const;
+type Item = { label: string; anchor?: string; route?: string };
+
+const items: Item[] = [
+  { label: "Home", anchor: "home" },
+  { label: "Discover", anchor: "discover" },
+  { label: "How it works", anchor: "how" },
+  { label: "Matches", anchor: "matches" },
+  { label: "Applications", anchor: "applications" },
+  { label: "Profile", route: "/profile" },
+];
 
 export function TopNav() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const navigate = useNavigate();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -23,6 +28,16 @@ export function TopNav() {
   }, []);
 
   useEffect(() => { setOpen(false); }, [pathname]);
+
+  const handleAnchor = (anchor: string) => {
+    setOpen(false);
+    if (pathname === "/home") {
+      const el = document.getElementById(anchor);
+      el?.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      navigate({ to: "/home", hash: anchor });
+    }
+  };
 
   return (
     <>
@@ -35,7 +50,16 @@ export function TopNav() {
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-10">
-          <Link to="/home" className="flex items-center gap-2">
+          <Link
+            to="/home"
+            onClick={(e) => {
+              if (pathname === "/home") {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }
+            }}
+            className="flex items-center gap-2"
+          >
             <span
               className="font-display text-2xl uppercase tracking-tight lg:text-3xl"
               style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.04em" }}
@@ -80,7 +104,7 @@ export function TopNav() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 320, damping: 34 }}
-              className="fixed right-0 top-0 z-50 flex h-full w-[min(420px,90vw)] flex-col border-l-[2.5px] border-foreground bg-background p-8"
+              className="fixed right-0 top-0 z-50 flex h-full w-[min(440px,92vw)] flex-col overflow-y-auto border-l-[2.5px] border-foreground bg-background p-8"
             >
               <div className="flex items-center justify-between">
                 <p className="italic text-foreground/60" style={{ fontFamily: "var(--font-serif-italic)" }}>
@@ -95,39 +119,50 @@ export function TopNav() {
                 </button>
               </div>
 
-              <nav className="mt-10 flex flex-col gap-2">
+              <nav className="mt-8 flex flex-col gap-1">
                 {items.map((item, i) => {
-                  const active = pathname === item.to;
+                  const active = item.route ? pathname === item.route : false;
+                  const inner = (
+                    <div
+                      className={`group flex items-baseline justify-between border-b-[2.5px] border-foreground/15 py-3.5 transition-colors hover:border-foreground ${active ? "border-foreground" : ""}`}
+                    >
+                      <span
+                        className="font-display uppercase leading-none transition-transform group-hover:translate-x-1"
+                        style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 5vw, 2.75rem)", letterSpacing: "-0.03em" }}
+                      >
+                        {item.label}
+                      </span>
+                      <span
+                        className="font-mono text-xs"
+                        style={{ fontFamily: "var(--font-mono)", color: active ? "var(--purple-match)" : "inherit" }}
+                      >
+                        0{i + 1}
+                      </span>
+                    </div>
+                  );
                   return (
                     <motion.div
-                      key={item.to}
+                      key={item.label}
                       initial={{ opacity: 0, x: 30 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.08 + i * 0.06, ease: [0.22, 1, 0.36, 1] }}
+                      transition={{ delay: 0.06 + i * 0.05, ease: [0.22, 1, 0.36, 1] }}
                     >
-                      <Link
-                        to={item.to}
-                        className={`group flex items-baseline justify-between border-b-[2.5px] border-foreground/20 py-4 transition-colors hover:border-foreground ${
-                          active ? "border-foreground" : ""
-                        }`}
-                      >
-                        <span
-                          className="font-display text-4xl uppercase leading-none lg:text-5xl"
-                          style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.03em" }}
-                        >
-                          {item.label}
-                        </span>
-                        <span
-                          className="font-mono text-xs"
-                          style={{ fontFamily: "var(--font-mono)", color: active ? "var(--purple-match)" : "inherit" }}
-                        >
-                          0{i + 1}
-                        </span>
-                      </Link>
+                      {item.route ? (
+                        <Link to={item.route} className="block">{inner}</Link>
+                      ) : (
+                        <button type="button" onClick={() => handleAnchor(item.anchor!)} className="block w-full text-left">
+                          {inner}
+                        </button>
+                      )}
                     </motion.div>
                   );
                 })}
               </nav>
+
+              <div className="mt-8 flex flex-wrap gap-2">
+                <Link to="/matches" className="rounded-full border-thick px-4 py-2 text-xs font-bold uppercase hover:bg-lime">Full matches →</Link>
+                <Link to="/applications" className="rounded-full border-thick px-4 py-2 text-xs font-bold uppercase hover:bg-lime">My quests →</Link>
+              </div>
 
               <div className="mt-auto pt-10">
                 <p className="text-xs uppercase tracking-wider text-foreground/50" style={{ fontFamily: "var(--font-mono)" }}>
