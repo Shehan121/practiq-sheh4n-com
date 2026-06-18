@@ -192,7 +192,7 @@ function HomePage() {
         <div className="grid items-center gap-12 lg:grid-cols-[1fr_1fr]">
           <div className="relative">
             <Parallax speed={0.5}>
-              <img src={handshake.url} alt="" className="mx-auto w-[90%] max-w-xl lg:w-full" />
+              <img src={handshake.url} alt="" className="mx-auto w-[90%] max-w-xl invert-0 dark:invert lg:w-full" />
             </Parallax>
             <Parallax speed={-0.3} className="absolute -bottom-6 left-4 hidden lg:block">
               <span
@@ -317,7 +317,7 @@ function HomePage() {
             </Link>
           </Parallax>
           <Parallax speed={0.4}>
-            <img src={thinking.url} alt="" className="mx-auto w-[90%] max-w-md" />
+            <img src={thinking.url} alt="" className="mx-auto w-[90%] max-w-md invert-0 dark:invert" />
           </Parallax>
         </div>
       </section>
@@ -338,7 +338,7 @@ function HomePage() {
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           src={cat.url}
           alt="Cat"
-          className="pointer-events-none absolute right-[-5%] top-[8%] z-0 hidden h-[75vh] w-auto max-w-none opacity-90 lg:block"
+          className="pointer-events-none absolute right-[-5%] top-[8%] z-0 hidden h-[75vh] w-auto max-w-none opacity-90 invert-0 dark:invert lg:block"
         />
 
         <div className="relative max-w-3xl">
