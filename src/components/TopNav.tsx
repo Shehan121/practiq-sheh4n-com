@@ -18,7 +18,7 @@ const items: Item[] = [
 export function TopNav() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const { isDark, toggle } = useDarkMode();
   const navigate = useNavigate();
 
   useEffect(() => {
