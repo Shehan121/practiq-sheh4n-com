@@ -103,7 +103,7 @@ function MatchesPage() {
                     Applied
                   </span>
                 ) : j.badge && (
-                  <span className="inline-block rounded-full border-thick bg-lime px-2.5 py-0.5 text-[10px] font-bold uppercase">
+                    <span className="inline-block rounded-full border-thick bg-lime px-2.5 py-0.5 text-[10px] font-bold uppercase text-black">
                     {j.badge}
                   </span>
                 )}
@@ -182,7 +182,7 @@ function MatchesPage() {
                     toast.success(`Applied to ${open.company} — +50 XP`);
                     setOpen(null);
                   }}
-                  className="flex-1 rounded-full border-thick bg-lime px-4 py-2.5 text-sm font-bold uppercase"
+                  className="flex-1 rounded-full border-thick bg-lime px-4 py-2.5 text-sm font-bold uppercase text-black"
                 >
                   Apply Now
                 </motion.button>
