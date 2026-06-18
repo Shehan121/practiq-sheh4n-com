@@ -338,7 +338,7 @@ function HomePage() {
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           src={cat.url}
           alt="Cat"
-          className="pointer-events-none absolute right-[-5%] top-[8%] z-0 hidden h-[75vh] w-auto max-w-none opacity-90 lg:block dark:invert dark:hue-rotate-180 dark:brightness-125 dark:saturate-150"
+          className="pointer-events-none absolute right-[-5%] top-[8%] z-0 hidden h-[75vh] w-auto max-w-none opacity-90 lg:block"
         />
 
         <div className="relative max-w-3xl">
