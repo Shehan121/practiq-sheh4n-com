@@ -85,7 +85,7 @@ function HomePage() {
       <section
         id="home"
         ref={heroRef}
-        className="relative mx-auto flex min-h-screen max-w-7xl flex-col justify-center overflow-hidden px-6 pt-32 lg:px-10"
+        className="relative mx-auto flex h-screen max-h-[900px] min-h-[640px] max-w-7xl flex-col justify-center overflow-hidden px-6 pt-24 lg:px-10"
       >
         {/* Floating celebrate illustration — anchored bottom-right, parallaxes */}
         <motion.img
@@ -95,15 +95,7 @@ function HomePage() {
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           src={celebrate.url}
           alt="Celebrating student"
-          className="pointer-events-none absolute right-[-4%] top-[18%] z-0 w-[60vw] max-w-[640px] opacity-95 lg:right-[2%] lg:top-[14%] lg:w-[44vw]"
-        />
-
-        {/* Floating cat sticker — tiny accent */}
-        <motion.img
-          style={{ y: useTransform(heroScroll, [0, 1], [0, -180]), rotate: useTransform(heroScroll, [0, 1], [-8, 14]) }}
-          src={cat.url}
-          alt=""
-          className="pointer-events-none absolute right-[8%] top-[8%] z-10 hidden w-28 lg:block"
+          className="pointer-events-none absolute right-[-6%] top-[20%] z-0 w-[48vw] max-w-[520px] opacity-95 lg:right-[2%] lg:top-[16%] lg:w-[38vw]"
         />
 
         <motion.div style={{ y: heroTextY, opacity: heroOpacity }} className="relative z-10">
@@ -118,7 +110,7 @@ function HomePage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.1 + 0.14 * i, ease: [0.22, 1, 0.36, 1] }}
                 className="text-stroke-black italic"
-                style={{ fontFamily: "var(--font-serif-italic)", fontSize: "clamp(4rem, 14vw, 12rem)", lineHeight: 0.88 }}
+                style={{ fontFamily: "var(--font-serif-italic)", fontSize: "clamp(3rem, 10vw, 8.5rem)", lineHeight: 0.88 }}
               >
                 {w}
               </motion.p>
@@ -126,11 +118,11 @@ function HomePage() {
           </div>
         </motion.div>
 
-        <motion.div style={{ y: heroSubY, opacity: heroOpacity }} className="relative z-10 mt-8 max-w-md">
-          <p className="text-base text-foreground/70 lg:text-lg">
+        <motion.div style={{ y: heroSubY, opacity: heroOpacity }} className="relative z-10 mt-6 max-w-md">
+          <p className="text-sm text-foreground/70 lg:text-base">
             The internship platform built for international students in Germany. Match by stack, visa status & language — track every quest from application to offer.
           </p>
-          <div className="mt-6 flex flex-wrap gap-3">
+          <div className="mt-5 flex flex-wrap gap-3">
             <Link to="/matches" className="inline-flex items-center gap-2 rounded-full border-thick bg-lime px-6 py-3 text-sm font-bold uppercase transition-transform hover:scale-105 active:scale-95">
               Browse matches <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
             </Link>
@@ -153,9 +145,6 @@ function HomePage() {
 
       {/* SEARCH STRIP */}
       <section id="discover" className="relative mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-28">
-        <Parallax speed={0.2} className="pointer-events-none absolute -top-10 right-4 hidden lg:block">
-          <img src={thinking.url} alt="" className="w-40 rotate-6" />
-        </Parallax>
         <div className="relative rounded-3xl border-thick bg-lime p-6 lg:p-12">
           <p className="italic text-foreground/80" style={{ fontFamily: "var(--font-serif-italic)" }}>
             Find your match
@@ -276,9 +265,6 @@ function HomePage() {
 
       {/* FEATURED CARDS */}
       <section id="matches" className="relative mx-auto max-w-7xl overflow-hidden px-6 py-28 lg:px-10 lg:py-40">
-        <Parallax speed={0.4} className="pointer-events-none absolute -right-10 top-10 hidden lg:block">
-          <img src={cat.url} alt="" className="w-48 rotate-6 opacity-90" />
-        </Parallax>
         <div className="mb-12 flex items-end justify-between">
           <div>
             <p className="italic text-foreground/60" style={{ fontFamily: "var(--font-serif-italic)" }}>Today's matches</p>
