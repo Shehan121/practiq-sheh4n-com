@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "sdk_version": "0.20.0",
+  "path": "/mcp",
+  "auth": {
+    "type": "none"
+  },
+  "mcp": {
+    "server": {
+      "name": "practiq-mcp",
+      "version": "0.1.0",
+      "title": "Practiq MCP"
+    },
+    "tools": [
+      {
+        "name": "list_jobs",
+        "title": "List internship jobs",
+        "description": "List all available internship opportunities in the Practiq catalog, with optional filters by city, language level, or visa sponsorship.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "city": {
+              "description": "Filter by city (e.g. Berlin, Munich).",
+              "type": "string"
+            },
+            "minMatch": {
+              "description": "Minimum match score 0-100.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "visaOk": {
+              "description": "Only jobs offering visa sponsorship.",
+              "type": "boolean"
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_job",
+        "title": "Get job details",
+        "description": "Fetch details for a single internship by its ID.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Job ID (e.g. n26, dh, cel, tr)."
+            }
+          },
+          "required": [
+            "id"
+          ]
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
