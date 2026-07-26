@@ -5,7 +5,7 @@ import { JOBS, usePractiq, type JobMatch } from "@/lib/practiq-store";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import { PageTransition, StaggerList, StaggerItem } from "@/components/PageTransition";
 import { toast } from "sonner";
-import handshake from "@/assets/handshake.png.asset.json";
+import { useLanguage, translateRole, translateType } from "@/lib/i18n";
 
 export const Route = createFileRoute("/matches")({
   head: () => ({
@@ -24,6 +24,12 @@ function MatchesPage() {
   const [filter, setFilter] = useState<Filter>("All");
   const [open, setOpen] = useState<JobMatch | null>(null);
   const { state, applyToJob } = usePractiq();
+  const { t } = useLanguage();
+  const filterLabels: Record<Filter, string> = {
+    All: t.matches.filterAll,
+    "Visa ok": t.matches.filterVisaOk,
+    "B1 Friendly": t.matches.filterB1Friendly,
+  };
 
   const list = JOBS.filter((j) => {
     if (filter === "Visa ok") return j.visaOk;
@@ -34,23 +40,13 @@ function MatchesPage() {
   return (
     <PageTransition>
     <main className="mx-auto min-h-screen w-full max-w-7xl px-6 pt-28 pb-20 lg:px-10 lg:pt-32">
-      <header className="grid items-end gap-6 lg:grid-cols-[1fr_auto]">
-        <div>
-          <p className="italic text-foreground/70" style={{ fontFamily: "var(--font-serif-italic)" }}>
-            Today's quest
-          </p>
-          <h1 className="font-display text-3xl uppercase lg:text-5xl" style={{ fontFamily: "var(--font-display)" }}>
-            Matches found — {list.length}
-          </h1>
-        </div>
-        <motion.img
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          src={handshake.url}
-          alt="Handshake"
-          className="hidden lg:block w-64"
-        />
+      <header>
+        <p className="italic text-foreground/70" style={{ fontFamily: "var(--font-serif-italic)" }}>
+          {t.matches.todaysQuest}
+        </p>
+        <h1 className="font-display text-3xl uppercase lg:text-5xl" style={{ fontFamily: "var(--font-display)" }}>
+          {t.matches.matchesFound} {list.length}
+        </h1>
       </header>
 
       <LayoutGroup>
@@ -69,7 +65,7 @@ function MatchesPage() {
                 className="absolute inset-0 -z-10 rounded-full bg-lime"
               />
             )}
-            <span className="relative">{f}</span>
+            <span className="relative" style={{ fontFamily: "var(--font-mono)" }}>{filterLabels[f]}</span>
           </motion.button>
         ))}
       </div>
@@ -95,15 +91,15 @@ function MatchesPage() {
                 <h3 className="font-display text-xl uppercase" style={{ fontFamily: "var(--font-display)" }}>
                   {j.company}
                 </h3>
-                <p className="text-sm">{j.role}</p>
+                <p className="text-sm" style={{ fontFamily: "var(--font-mono)" }}>{translateRole(j.role, t)}</p>
               </div>
               <div className="text-right">
                 {applied ? (
-                  <span className="inline-block rounded-full border-thick bg-foreground px-2.5 py-0.5 text-[10px] font-bold uppercase text-background">
-                    Applied
+                  <span className="inline-block rounded-full border-thick bg-foreground px-2.5 py-0.5 text-[10px] font-bold uppercase text-background" style={{ fontFamily: "var(--font-mono)" }}>
+                    {t.matches.applied}
                   </span>
                 ) : j.badge && (
-                    <span className="inline-block rounded-full border-thick bg-lime px-2.5 py-0.5 text-[10px] font-bold uppercase text-black">
+                    <span className="inline-block rounded-full border-thick bg-lime px-2.5 py-0.5 text-[10px] font-bold uppercase text-black" style={{ fontFamily: "var(--font-mono)" }}>
                     {j.badge}
                   </span>
                 )}
@@ -113,7 +109,7 @@ function MatchesPage() {
               </div>
             </div>
             <p className="mt-2 text-xs italic text-foreground/70" style={{ fontFamily: "var(--font-serif-italic)" }}>
-              {j.type} · {j.city} · {j.language} German{j.visaOk ? " · Visa ok" : ""}
+              {translateType(j.type, t)} · {j.city} · {j.language} {t.matches.germanSuffix}{j.visaOk ? ` · ${t.home.visaOk}` : ""}
             </p>
             <div className="mt-3 flex flex-wrap gap-1.5">
               {j.skills.map((s) => (
@@ -153,25 +149,26 @@ function MatchesPage() {
             <h2 className="font-display text-2xl uppercase" style={{ fontFamily: "var(--font-display)" }}>
               {open.company}
             </h2>
-            <p className="text-sm">{open.role}</p>
+            <p className="text-sm" style={{ fontFamily: "var(--font-mono)" }}>{translateRole(open.role, t)}</p>
             <dl className="mt-4 space-y-2 text-sm" style={{ fontFamily: "var(--font-mono)" }}>
-              <Row k="Visa" v={open.visaOk ? "Accepted" : "Not supported"} />
-              <Row k="Language" v={`${open.language} German`} />
-              <Row k="City" v={open.city} />
-              <Row k="Duration" v="6 months" />
-              <Row k="Match" v={`${open.match}%`} />
+              <Row k={t.matches.visa} v={open.visaOk ? t.matches.accepted : t.matches.notSupported} />
+              <Row k={t.matches.language} v={`${open.language} ${t.matches.germanSuffix}`} />
+              <Row k={t.matches.city} v={open.city} />
+              <Row k={t.matches.duration} v={t.matches.months6} />
+              <Row k={t.matches.match} v={`${open.match}%`} />
             </dl>
             <div className="mt-6 flex gap-3">
               <motion.button
                 whileTap={{ scale: 0.96 }}
                 onClick={() => setOpen(null)}
                 className="flex-1 rounded-full border-thick px-4 py-2.5 text-sm font-bold uppercase"
+                style={{ fontFamily: "var(--font-mono)" }}
               >
-                Close
+                {t.matches.close}
               </motion.button>
               {state.applications.some((a) => a.id === open.id) ? (
-                <button disabled className="flex-1 rounded-full border-thick bg-foreground px-4 py-2.5 text-sm font-bold uppercase text-background opacity-80">
-                  Applied ✓
+                <button disabled className="flex-1 rounded-full border-thick bg-foreground px-4 py-2.5 text-sm font-bold uppercase text-background opacity-80" style={{ fontFamily: "var(--font-mono)" }}>
+                  {t.matches.appliedCheck}
                 </button>
               ) : (
                 <motion.button
@@ -183,8 +180,9 @@ function MatchesPage() {
                     setOpen(null);
                   }}
                   className="flex-1 rounded-full border-thick bg-lime px-4 py-2.5 text-sm font-bold uppercase text-black"
+                  style={{ fontFamily: "var(--font-mono)" }}
                 >
-                  Apply Now
+                  {t.matches.applyNow}
                 </motion.button>
               )}
             </div>

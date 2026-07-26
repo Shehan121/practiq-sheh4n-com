@@ -1,8 +1,10 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
+import { useLanguage } from "@/lib/i18n";
 
 export function Splash() {
   const [show, setShow] = useState(true);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const t = setTimeout(() => setShow(false), 1900);
@@ -60,7 +62,7 @@ export function Splash() {
             className="mt-4 italic text-black/70"
             style={{ fontFamily: "var(--font-serif-italic)", fontSize: "1.25rem" }}
           >
-            learn / grow / achieve
+            {t.splash.tagline}
           </motion.p>
 
           <motion.div
