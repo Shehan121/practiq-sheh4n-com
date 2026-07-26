@@ -3,7 +3,7 @@ import { BottomNav } from "@/components/BottomNav";
 import { usePractiq } from "@/lib/practiq-store";
 import { motion } from "framer-motion";
 import { PageTransition } from "@/components/PageTransition";
-import avatar from "@/assets/avatar.png.asset.json";
+import { useLanguage } from "@/lib/i18n";
 
 export const Route = createFileRoute("/profile")({
   head: () => ({
@@ -17,6 +17,7 @@ export const Route = createFileRoute("/profile")({
 
 function ProfilePage() {
   const { state, reset } = usePractiq();
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const skills = state.skills.length ? state.skills : ["Python", "JavaScript", "SQL", "React"];
 
@@ -29,7 +30,7 @@ function ProfilePage() {
     <PageTransition>
     <main className="mx-auto min-h-screen w-full max-w-7xl px-6 pt-28 pb-20 lg:px-10 lg:pt-32">
       <h1 className="font-display text-3xl uppercase lg:text-5xl" style={{ fontFamily: "var(--font-display)" }}>
-        Your Profile
+        {t.profile.yourProfile}
       </h1>
 
       <div className="mt-6 lg:grid lg:grid-cols-[320px_1fr] lg:gap-10">
@@ -40,27 +41,27 @@ function ProfilePage() {
           transition={{ type: "spring", stiffness: 200, damping: 15 }}
           className="h-28 w-28 overflow-hidden rounded-full border-thick bg-lime lg:h-36 lg:w-36"
         >
-          <img src={avatar.url} alt="Amir Hossein" className="h-full w-full object-cover" />
+          <img src="/figma-avatar.png" alt="Amir Hossein" className="h-full w-full object-cover" />
         </motion.div>
         <p className="mt-3 text-2xl font-bold italic" style={{ fontFamily: "var(--font-serif-italic)" }}>
           Amir Hossein
         </p>
-        <p className="text-sm text-foreground/70">CS @ TU Berlin ; Backend curious</p>
+        <p className="text-sm text-foreground/70" style={{ fontFamily: "var(--font-mono)" }}>{t.profile.bio}</p>
 
         <div className="mt-3 flex flex-wrap justify-center gap-2">
-          <span className="rounded-full border-thick px-3 py-1 text-xs font-bold uppercase">Level 4</span>
+          <span className="rounded-full border-thick px-3 py-1 text-xs font-bold uppercase" style={{ fontFamily: "var(--font-mono)" }}>{t.profile.level}</span>
           <span
             className="rounded-full border-thick px-3 py-1 text-xs font-bold uppercase"
-            style={{ background: "var(--purple-match)", color: "white" }}
+            style={{ background: "var(--purple-match)", color: "white", fontFamily: "var(--font-mono)" }}
           >
-            240 XP
+            {t.profile.xp}
           </span>
-          <span className="rounded-full border-thick px-3 py-1 text-xs font-bold uppercase">7 days</span>
+          <span className="rounded-full border-thick px-3 py-1 text-xs font-bold uppercase" style={{ fontFamily: "var(--font-mono)" }}>{t.profile.days}</span>
         </div>
 
         <div className="mt-6 w-full">
-        <div className="flex justify-between text-xs font-bold uppercase">
-          <span>Profile Strength</span>
+        <div className="flex justify-between text-xs font-bold uppercase" style={{ fontFamily: "var(--font-mono)" }}>
+          <span>{t.profile.profileStrength}</span>
           <span>98%</span>
         </div>
         <div className="mt-2 h-3 w-full overflow-hidden rounded-full border-thick">
@@ -76,17 +77,17 @@ function ProfilePage() {
 
       <div className="mt-6 space-y-5 lg:mt-0">
       <section className="rounded-2xl border-thick p-5">
-        <h2 className="text-xs font-bold uppercase tracking-wide text-foreground/60">About</h2>
+        <h2 className="text-xs font-bold uppercase tracking-wide text-foreground/60" style={{ fontFamily: "var(--font-mono)" }}>{t.profile.about}</h2>
         <dl className="mt-3 space-y-2 text-sm" style={{ fontFamily: "var(--font-mono)" }}>
-          <Row k="Email" v="amir@tu-berlin.de" />
-          <Row k="University" v="TU Berlin" />
-          <Row k="VISA" v="Accepted" />
-          <Row k="German" v="B1" />
+          <Row k={t.profile.email} v="amir@tu-berlin.de" />
+          <Row k={t.profile.university} v="TU Berlin" />
+          <Row k={t.profile.visa} v={t.profile.accepted} />
+          <Row k={t.profile.german} v="B1" />
         </dl>
       </section>
 
       <section>
-        <h2 className="text-xs font-bold uppercase tracking-wide text-foreground/60">Skills</h2>
+        <h2 className="text-xs font-bold uppercase tracking-wide text-foreground/60" style={{ fontFamily: "var(--font-mono)" }}>{t.profile.skills}</h2>
         <div className="mt-2 flex flex-wrap gap-1.5">
           {skills.map((s) => (
             <span key={s} className="rounded-full border-thick px-3 py-1 text-xs" style={{ fontFamily: "var(--font-mono)" }}>
@@ -97,7 +98,7 @@ function ProfilePage() {
       </section>
 
       <section>
-        <h2 className="text-xs font-bold uppercase tracking-wide text-foreground/60">Preferred Cities</h2>
+        <h2 className="text-xs font-bold uppercase tracking-wide text-foreground/60" style={{ fontFamily: "var(--font-mono)" }}>{t.profile.preferredCities}</h2>
         <div className="mt-2 flex flex-wrap gap-1.5">
           {["Berlin", "Remote"].map((s) => (
             <span key={s} className="rounded-full border-thick px-3 py-1 text-xs" style={{ fontFamily: "var(--font-mono)" }}>
@@ -108,12 +109,12 @@ function ProfilePage() {
       </section>
 
       <section className="rounded-2xl border-thick p-5">
-        <h2 className="text-xs font-bold uppercase tracking-wide text-foreground/60">Settings</h2>
+        <h2 className="text-xs font-bold uppercase tracking-wide text-foreground/60" style={{ fontFamily: "var(--font-mono)" }}>{t.profile.settings}</h2>
         <dl className="mt-3 space-y-2 text-sm" style={{ fontFamily: "var(--font-mono)" }}>
-          <Row k="Notifications" v="ON" />
-          <Row k="Language" v="English" />
-          <Row k="Privacy" v="Manage" />
-          <Row k="Help and Support" v="→" />
+          <Row k={t.profile.notifications} v={t.profile.on} />
+          <Row k={t.profile.language} v={t.profile.currentLanguageName} />
+          <Row k={t.profile.privacy} v={t.profile.manage} />
+          <Row k={t.profile.helpSupport} v="→" />
         </dl>
       </section>
 
@@ -122,9 +123,9 @@ function ProfilePage() {
         whileHover={{ scale: 1.01 }}
         onClick={logout}
         className="w-full rounded-full border-thick py-3 text-sm font-bold uppercase tracking-wide"
-        style={{ background: "var(--salmon)" }}
+        style={{ background: "var(--salmon)", fontFamily: "var(--font-mono)" }}
       >
-        Logout
+        {t.profile.logout}
       </motion.button>
       </div>
       </div>

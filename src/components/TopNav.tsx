@@ -3,24 +3,25 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { useDarkMode } from "@/hooks/useDarkMode";
-
-type Item = { label: string; anchor?: string; route?: string };
-
-const items: Item[] = [
-  { label: "Home", anchor: "home" },
-  { label: "Discover", anchor: "discover" },
-  { label: "How it works", anchor: "how" },
-  { label: "Matches", anchor: "matches" },
-  { label: "Applications", anchor: "applications" },
-  { label: "Profile", route: "/profile" },
-];
+import { useLanguage } from "@/lib/i18n";
 
 export function TopNav() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { isDark, toggle } = useDarkMode();
+  const { language, toggle: toggleLanguage, t } = useLanguage();
   const navigate = useNavigate();
+
+  type Item = { label: string; anchor?: string; route?: string };
+  const items: Item[] = [
+    { label: t.topnav.navHome, anchor: "home" },
+    { label: t.topnav.navDiscover, anchor: "discover" },
+    { label: t.topnav.navHow, anchor: "how" },
+    { label: t.topnav.navMatches, anchor: "matches" },
+    { label: t.topnav.navApplications, anchor: "applications" },
+    { label: t.topnav.navProfile, route: "/profile" },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -80,6 +81,16 @@ export function TopNav() {
             <motion.button
               whileTap={{ scale: 0.9 }}
               whileHover={{ scale: 1.05 }}
+              onClick={toggleLanguage}
+              aria-label={language === "en" ? "Auf Deutsch wechseln" : "Switch to English"}
+              className="flex h-10 w-10 items-center justify-center rounded-full border-thick bg-background text-xs font-bold uppercase"
+              style={{ fontFamily: "var(--font-mono)" }}
+            >
+              {language === "en" ? "DE" : "EN"}
+            </motion.button>
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              whileHover={{ scale: 1.05 }}
               onClick={toggle}
               aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
               className="flex h-10 w-10 items-center justify-center rounded-full border-thick bg-background"
@@ -114,8 +125,9 @@ export function TopNav() {
               onClick={() => setOpen((v) => !v)}
               aria-label="Open menu"
               className="flex items-center gap-2 rounded-full border-thick bg-lime px-4 py-2 text-xs font-bold uppercase text-black tracking-wide lg:px-5 lg:py-2.5 lg:text-sm"
+              style={{ fontFamily: "var(--font-mono)" }}
             >
-              <span className="hidden sm:inline">Menu</span>
+              <span className="hidden sm:inline">{t.topnav.menu}</span>
               <Menu className="h-4 w-4" strokeWidth={2.5} />
             </motion.button>
           </div>
@@ -143,7 +155,7 @@ export function TopNav() {
             >
               <div className="flex items-center justify-between">
                 <p className="italic text-foreground/60" style={{ fontFamily: "var(--font-serif-italic)" }}>
-                  Navigation
+                  {t.topnav.navigation}
                 </p>
                 <button
                   onClick={() => setOpen(false)}
@@ -195,16 +207,16 @@ export function TopNav() {
               </nav>
 
               <div className="mt-8 flex flex-wrap gap-2">
-                <Link to="/matches" className="rounded-full border-thick px-4 py-2 text-xs font-bold uppercase hover:bg-lime">Full matches →</Link>
-                <Link to="/applications" className="rounded-full border-thick px-4 py-2 text-xs font-bold uppercase hover:bg-lime">My quests →</Link>
+                <Link to="/matches" className="rounded-full border-thick px-4 py-2 text-xs font-bold uppercase hover:bg-lime">{t.topnav.fullMatches}</Link>
+                <Link to="/applications" className="rounded-full border-thick px-4 py-2 text-xs font-bold uppercase hover:bg-lime">{t.topnav.myQuests}</Link>
               </div>
 
               <div className="mt-auto pt-10">
                 <p className="text-xs uppercase tracking-wider text-foreground/50" style={{ fontFamily: "var(--font-mono)" }}>
-                  Practiq © 2026
+                  {t.topnav.footerCopyright}
                 </p>
                 <p className="mt-1 italic text-foreground/70" style={{ fontFamily: "var(--font-serif-italic)" }}>
-                  learn / grow / achieve
+                  {t.topnav.footerTagline}
                 </p>
               </div>
             </motion.aside>

@@ -1,5 +1,7 @@
-import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, type MotionValue } from "framer-motion";
 import { useRef, type ReactNode } from "react";
+
+const RANGE = 340; // px of travel at speed=1; higher = more pronounced parallax
 
 export function Parallax({
   children,
@@ -15,7 +17,11 @@ export function Parallax({
     target: ref,
     offset: ["start end", "end start"],
   });
-  const y = useTransform(scrollYProgress, [0, 1], [200 * speed, -200 * speed]);
+  const rawY = useTransform(scrollYProgress, [0, 1], [RANGE * speed, -RANGE * speed]);
+  // Spring-smooth the raw scroll-driven value so parallax settles with a
+  // touch of inertia instead of tracking scroll position 1:1 — reads as
+  // silkier when paired with Lenis's smoothed scroll.
+  const y = useSpring(rawY, { stiffness: 120, damping: 24, mass: 0.5 });
   return (
     <motion.div ref={ref} style={{ y }} className={className}>
       {children}
