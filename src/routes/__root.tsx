@@ -7,11 +7,10 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import { ReactLenis } from "lenis/react";
 
 import appCss from "../styles.css?url";
-import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Toaster } from "@/components/ui/sonner";
 import { Splash } from "@/components/Splash";
 import { TopNav } from "@/components/TopNav";
@@ -41,9 +40,6 @@ function NotFoundComponent() {
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
-  useEffect(() => {
-    reportLovableError(error, { boundary: "tanstack_root_error_component" });
-  }, [error]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -83,20 +79,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Practiq" },
       { name: "description", content: "Practiq matches international students with German internships, tracking applications and profile progress." },
-      { name: "author", content: "Lovable" },
+      { name: "author", content: "Shehan Nimsara" },
       { property: "og:title", content: "Practiq" },
       { property: "og:description", content: "Practiq matches international students with German internships, tracking applications and profile progress." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
       { name: "theme-color", content: "#CBFF00" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-status-bar-style", content: "default" },
       { name: "apple-mobile-web-app-title", content: "Practiq" },
       { name: "twitter:title", content: "Practiq" },
       { name: "twitter:description", content: "Practiq matches international students with German internships, tracking applications and profile progress." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/5f8b85f8-7eb6-47c4-8171-0935c77970cf/id-preview-daf6940c--7e1ed3ae-4325-4617-a747-6125b195d667.lovable.app-1781815251639.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/5f8b85f8-7eb6-47c4-8171-0935c77970cf/id-preview-daf6940c--7e1ed3ae-4325-4617-a747-6125b195d667.lovable.app-1781815251639.png" },
+      { property: "og:image", content: "/icon-512.png" },
+      { name: "twitter:image", content: "/icon-512.png" },
     ],
     links: [
       {

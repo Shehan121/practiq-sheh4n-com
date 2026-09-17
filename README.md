@@ -1,51 +1,123 @@
 # Practiq
 
-An internship-matching app for **international students looking for a
-Pflichtpraktikum in Germany** — the mandatory placement a German degree requires.
-It surfaces roles filtered by the things that actually decide whether a student
-can take a job: required German level, visa sponsorship, and city.
+**HCI portfolio project — Summer 2026, B.Sc. Software Design (International), TH Aschaffenburg**
+Student: Kaveesha Shehan Nimsara Disanayaka Mudiyanselage · Matriculation 2279147
 
-Alongside the web UI it exposes an **MCP server**, so an AI assistant can query
-the job catalogue directly as a tool.
+Practiq is an internship-matching app for **international, non-EU students in
+Germany who must complete a Pflichtpraktikum** (mandatory internship) inside a
+fixed semester window. Generic job boards make them filter by hand, one tab at a
+time, for the two things that decide eligibility before skills are even
+discussed: *does this employer sponsor a student visa?* and *is the German level
+they want realistic?* Practiq puts those two filters in front of every listing,
+ranks the remaining matches by fit, and turns the application pipeline into
+visible progress against the deadline.
+
+This repository is the complete project: the written documentation, the Figma
+prototype and design system, the physical prototype, the usability tests, the
+presentation, and the deployed web application built as a bonus task.
 
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?logo=typescript&logoColor=white)
 ![TanStack](https://img.shields.io/badge/TanStack_Start-1.16-FF4154)
 ![Tailwind](https://img.shields.io/badge/Tailwind-4-06B6D4?logo=tailwindcss&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-8-646E7F?logo=vite&logoColor=white)
+![Figma](https://img.shields.io/badge/Figma-prototype-F24E1E?logo=figma&logoColor=white)
 
 ---
 
-## The problem
+## Repository map
 
-Generic job boards are close to useless for an international student in Germany,
-because they omit the three filters that determine eligibility:
-
-| Constraint | Why it decides everything |
+| Folder | Contents |
 |---|---|
-| **German level** | A role wanting B2 is out of reach for a B1 speaker, regardless of technical fit |
-| **Visa sponsorship** | Without it, a non-EU student cannot accept the role at all |
-| **"Mandatory internship"** | A Pflichtpraktikum is legally distinct from a working-student role, with different permissions |
+| [`docs/`](docs/) | `HCI_Practiq_final_document.pdf` — the full written submission (research, design, iterations, WCAG analysis, user testing, physical prototype, review) |
+| [`figma-prototype/`](figma-prototype/) | `Practiq.fig` source file plus PDF exports of the design system, mobile screens and tablet screens |
+| [`images/iterations/`](images/iterations/) | Wireframe, wireflow and every design iteration from the first ranked dashboard to the final prototype |
+| [`images/physical-prototype/`](images/physical-prototype/) | Photos of the physical "Deadline Companion" prototype |
+| [`images/inspirations/`](images/inspirations/) | UI references collected during the *Consume* phase |
+| [`images/memes/`](images/memes/) | The two HCI memes from the *Produce* phase |
+| [`testing/`](testing/) | Screen recordings and audio of the moderated usability tests on mobile and tablet |
+| [`presentation/`](presentation/) | `practiq-presentation.html` — the self-contained portfolio presentation (open in a browser) |
+| [`prompts/`](prompts/) | The prompts used to scaffold and build the web application |
+| `src/`, `public/`, `package.json` … | The web application (Bonus II) — see below |
 
-Every job in Practiq carries all three as first-class fields, so the listing is
-filtered by eligibility before it is ranked by fit.
+Large binaries (`*.fig`, `*.mp4`, `*.m4a` and the Figma PDF exports) are
+stored with **Git LFS**. Run `git lfs install` once before cloning, or the
+files come down as small pointer stubs.
 
-## Features
+Live Figma file: https://www.figma.com/design/xCXgrj9VWwUYwUpBD8PtTm/Practiq
+
+---
+
+## The design project
+
+### Process
+
+Design Thinking (Empathize → Define → Ideate → Prototype → Test), with one
+deliberate loop back from Prototype to Define. The first concept was a plain
+ranked dashboard: correct information, but it answered only half the problem.
+Next to the empathy map it told the persona what existed and did nothing about
+how he felt while looking at it. The whole prototype was reframed around that
+FEELS quadrant, and every gamified element in the final UI traces back to one
+line in it.
+
+### Persona
+
+**Amir Hossein**, 23, Iranian national, 5th-semester Computer Science student.
+Technically capable (Python, Java) — the friction is almost entirely outside the
+code: not knowing which companies take non-EU applicants, German that is not
+strong enough for most postings, and a graduation deadline that keeps moving
+closer while the shortlist does not grow.
+
+### How might we
+
+> help international students in Germany **efficiently discover and apply** for
+> internships **compatible with their visa status, language level and technical
+> background** — without manually filtering hundreds of irrelevant listings?
+
+### What was built
+
+- **Design system v1.0** — Swiss/International Typographic Style skeleton with a
+  neo-brutalist voice: hard offset shadows, flat lime accent (`#CBFF00`), a
+  three-voice type hierarchy, light and dark modes designed rather than inverted
+- **Mobile prototype** — dashboard home, quest-framed ranked match list
+  (`All · Visa ok · B1 Friendly` filters), application tracker with a four-step
+  stepper, profile with XP and streaks
+- **Tablet prototype** — rethought for the wider canvas with a side rail rather
+  than stretched from the phone layout
+- **Bilingual EN/DE** on every screen (Bonus I)
+- **Physical prototype** — the "Deadline Companion", a tangible answer to the
+  deadline anxiety the digital tracker addresses on screen
+- **Evaluation** — Laws of UX and Gestalt review, UX writing pass, WCAG 2.2
+  accessibility analysis, moderated usability tests on both device classes,
+  ISO 9241-11 self-review
+
+The full reasoning behind each decision is in `docs/HCI_Practiq_final_document.pdf`.
+
+---
+
+## The web application (Bonus II)
+
+A stateful build of the prototype, not a click-through. It runs on real state:
+advancing an application walks it through the stepper, a rejection moves it to
+"Quest complete", and the whole tracker together with the theme and language
+choice survives a reload in `localStorage`.
+
+Deployed at: **practiq-sheh4n-com-lsiv.vercel.app**
+
+### Features
 
 - **Match scoring** — roles ranked 0–100 against the student's skills, with a
   `Rare` badge on especially strong fits
-- **Eligibility filters** — city, German level (B1/B2), visa sponsorship
-- **Application pipeline** — four stages (Applied → In Review → Interview →
-  Decision) with a deadline countdown per application
-- **Bilingual EN/DE** — a hand-rolled i18n layer, appropriate given the audience
-- **Dark mode**
+- **Eligibility filters** — city, German level (B1/B2), visa sponsorship, shown
+  on the card itself (`Berlin · B1 German · Visa ok`)
+- **Application pipeline** — Applied → In Review → Interview → Decision, with a
+  deadline countdown per application
+- **Bilingual EN/DE** — a full translation, not a veneer
+- **Dark mode** and `prefers-reduced-motion` support
 - **Animated UI** — Framer Motion page transitions, Lenis smooth scrolling,
-  parallax and a splash screen
-- **MCP server** — exposes the catalogue as AI-callable tools
+  parallax, splash screen
+- **MCP server** — exposes the job catalogue as AI-callable tools
 
----
-
-## Routes
+### Routes
 
 File-based routing via TanStack Start; every file in `src/routes` is a route.
 
@@ -56,15 +128,12 @@ File-based routing via TanStack Start; every file in `src/routes` is a route.
 | `matches.tsx` | Ranked job matches with filters |
 | `applications.tsx` | Pipeline tracker |
 | `profile.tsx` | Skills and profile |
-| `mcp.ts`, `[.mcp]/*` | MCP endpoints (see below) |
+| `mcp.ts`, `[.mcp]/*` | MCP endpoints |
 | `[.well-known]/oauth-protected-resource.ts` | OAuth resource metadata for MCP clients |
 
-`__root.tsx` is the only root layout.
+### MCP server
 
-## The MCP server
-
-The interesting part of this project. Two tools are defined with
-`@lovable.dev/mcp-js` and Zod schemas, letting an AI assistant query the job
+Two tools are defined with Zod schemas so an AI assistant can query the
 catalogue as structured tool calls rather than scraping the UI:
 
 | Tool | Parameters |
@@ -72,15 +141,10 @@ catalogue as structured tool calls rather than scraping the UI:
 | `list_jobs` | `city`, `minMatch` (0–100), `visaOk` |
 | `get_job` | job id |
 
-Both are annotated `readOnlyHint: true`, `idempotentHint: true`,
-`openWorldHint: false` — accurate, since they read a fixed in-memory catalogue
-and have no side effects. Those annotations are what let a client reason about
-whether a call is safe to retry.
+Both are annotated `readOnlyHint`, `idempotentHint` and `openWorldHint: false`
+— accurate, since they read a fixed in-memory catalogue with no side effects.
 
-`[.well-known]/oauth-protected-resource.ts` publishes the discovery document an
-MCP client needs to negotiate access.
-
-## State model
+### State model
 
 There is no backend. State lives in `localStorage` under `practiq-state-v1`,
 with the job catalogue hardcoded in `src/lib/practiq-store.ts`:
@@ -98,19 +162,14 @@ export interface JobMatch {
 }
 ```
 
-`read()` guards on `typeof window === "undefined"` and returns the defaults
-during server-side rendering, then merges stored state over the defaults —
-so a state shape added in a later version does not break an existing user's
-saved data.
+`read()` returns the defaults during SSR and merges stored state over them on
+the client, so a later state shape does not break an existing user's saved data.
+The app is a **working prototype with realistic mock data** (N26, Delivery Hero,
+Celonis, Trade Republic), not a live product.
 
-This makes the app a **working prototype with realistic mock data** (N26,
-Delivery Hero, Celonis, Trade Republic), not a live product.
+### Running it
 
----
-
-## Running it
-
-Requires Node 20+ (verified on Node 22).
+Requires Node 20+.
 
 ```bash
 npm install
@@ -121,43 +180,9 @@ npm run lint       # eslint
 npm run format     # prettier --write .
 ```
 
-The production build targets **Nitro**, output to `.output/`, and generates a
-Cloudflare Workers `wrangler.json` — so it deploys to Workers rather than to a
-Node host.
+The production build targets Nitro (output in `.output/`).
 
-Verified: `npm run build` succeeds in ~460 ms.
-
----
-
-## Known issues
-
-1. **721 Prettier violations.** `npm run lint` reports 730 problems, of which
-   721 are `prettier/prettier` formatting errors and 721 are auto-fixable.
-   `npm run format` clears them. They have been left untouched here deliberately:
-   this repository syncs to Lovable, and a whole-tree reformat would bury the
-   real history in a single enormous diff. Worth doing as its own commit.
-
-2. **The remaining nine are worth actually reading**, unlike the formatting noise:
-   - 7 × `react-refresh/only-export-components` — modules exporting both a
-     component and non-component values, which breaks hot-reload granularity
-   - 1 × `react-hooks/exhaustive-deps` — a genuine stale-closure risk
-   - 1 × `@typescript-eslint/ban-ts-comment` — a suppressed type error
-
-3. **No tests.** Match scoring and the stage pipeline are the logic worth
-   covering first.
-
-4. **No persistence beyond the browser.** Clearing site data loses every
-   application. A real version needs a backend and auth.
-
-5. **The job catalogue is hardcoded** — four companies in a TypeScript array.
-   The MCP tools are already written against a clean interface, so swapping in a
-   real data source would not change their shape.
-
-6. **46 shadcn/ui primitives are vendored** into `src/components/ui`, most of
-   them unused by the five actual screens. That is the normal shadcn trade-off
-   (you own the code), but it inflates the repo considerably.
-
-## Tech stack
+### Tech stack
 
 | Layer | Choice |
 |---|---|
@@ -166,18 +191,16 @@ Verified: `npm run build` succeeds in ~460 ms.
 | Animation | Framer Motion, Lenis |
 | Forms | React Hook Form + Zod |
 | Data | TanStack Query |
-| Charts | Recharts |
-| Build | Vite 8, Nitro → Cloudflare Workers |
+| Build | Vite 8, Nitro |
 | Tooling | TypeScript 5.8, ESLint 9, Prettier |
-| AI integration | `@lovable.dev/mcp-js` |
 
-## Project structure
+### Project structure
 
 ```
 src/
 ├── routes/          file-based routes + MCP endpoints
 ├── components/
-│   ├── ui/          46 shadcn/ui primitives
+│   ├── ui/          shadcn/ui primitives
 │   ├── TopNav, BottomNav, PageTransition, Parallax, Splash
 ├── lib/
 │   ├── practiq-store.ts   state model + job catalogue
@@ -188,11 +211,22 @@ src/
 └── server.ts        server entry
 ```
 
-> [!NOTE]
-> This project is connected to [Lovable](https://lovable.dev) — see
-> [AGENTS.md](AGENTS.md). Published history must not be rewritten, as that
-> desynchronises the Lovable editor.
+### Known limitations
+
+- No tests — match scoring and the stage pipeline are the logic worth covering first
+- No persistence beyond the browser; a real version needs a backend and auth
+- The job catalogue is four hardcoded companies
+- Many vendored shadcn/ui primitives are unused by the five actual screens
+- `npm run lint` reports Prettier formatting violations; `npm run format` clears them
+
+---
+
+## References
+
+lawsofux.com · w3.org/TR/WCAG22 · ISO 9241-11 · sinus-institut.de ·
+hubspot.com/make-my-persona · uxpressia.com
 
 ## Author
 
 **Shehan Nimsara** — B.Sc. Software Design (International), TH Aschaffenburg
+[sheh4n.com](https://sheh4n.com)
