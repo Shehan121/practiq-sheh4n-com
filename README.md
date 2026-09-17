@@ -12,6 +12,8 @@ they want realistic?* Practiq puts those two filters in front of every listing,
 ranks the remaining matches by fit, and turns the application pipeline into
 visible progress against the deadline.
 
+Live web app: **https://practiq-sheh4n-com-lsiv.vercel.app**
+
 This repository is the complete project: the written documentation, the Figma
 prototype and design system, the physical prototype, the usability tests, the
 presentation, and the deployed web application built as a bonus task.
@@ -101,7 +103,7 @@ advancing an application walks it through the stepper, a rejection moves it to
 "Quest complete", and the whole tracker together with the theme and language
 choice survives a reload in `localStorage`.
 
-Deployed at: **practiq-sheh4n-com-lsiv.vercel.app**
+Live site: **https://practiq-sheh4n-com-lsiv.vercel.app**
 
 ### Features
 
